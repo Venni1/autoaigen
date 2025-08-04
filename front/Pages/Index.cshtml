@@ -1,0 +1,36 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<input type="text" id="promptInput" placeholder="Type a prompt..." />
+<div id="gallery"></div>
+
+<script>
+    let intervalId = null;
+    let promptTimer = null;
+
+    // Start fetching images every second
+    intervalId = setInterval(fetchImages, 1000);
+
+    document.getElementById("promptInput").addEventListener("input", function () {
+        const prompt = this.value;
+        // Debounce prompt update
+        clearTimeout(promptTimer);
+        promptTimer = setTimeout(() => {
+            updatePrompt(prompt);
+        }, 300); // 300ms debounce
+    });
+
+    function updatePrompt(prompt) {
+        fetch("http://localhost:8000/update_prompt?prompt=" + encodeURIComponent(prompt));
+    }
+
+    async function fetchImages() {
+        const res = await fetch("http://localhost:8000/images");
+        const data = await res.json();
+        const gallery = document.getElementById("gallery");
+        gallery.innerHTML = data.images.map(img => `<img src="http://localhost:8000/output/${img}" width="256" />`).join('');
+    }
+</script>
