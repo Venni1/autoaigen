@@ -5,6 +5,7 @@
 - Python 3.10.0
 - Basic Python and HTML knowledge
 - A good GPU (e.g. the NVIDIA RTX 4090)
+- For packages for Python ask ChatGPT
 # IF YOU DON'T HAVE A GOOD GPU, THE GENERATION TAKES A LONG TIME!
 ## Setup
 1. Open the "front" folder with Visual Studio
